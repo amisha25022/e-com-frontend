@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Table from './Table/Table';
+import InputBox from './InputBox/InputBox';
 const ProductList = () => {
     const [products, setProducts] = useState([]);
 
@@ -18,7 +20,6 @@ const ProductList = () => {
     }
 
     const deleteProduct = async (id) => {
-        console.warn(id)
         let result = await fetch(`http://localhost:5000/product/${id}`, {
             method: "Delete"
         });
@@ -29,7 +30,7 @@ const ProductList = () => {
     }
 
     const searchHandle = async (event)=>{
-        let key = event.target.value;
+        let key = event.value;
         if(key){
             let result = await fetch(`http://localhost:5000/search/${key}`);
             result = await result.json()
@@ -45,17 +46,38 @@ const ProductList = () => {
     return (
         <div className="product-list">
             <h3>Product List</h3>
-            <input type="" className='search-product-box' placeholder='Search Product'
-            onChange={searchHandle}
+            <InputBox 
+                id="search-product"
+                placeholder='Search Product'
+                onClick={searchHandle}
+                isSearch={true}
+                customClass={{
+                    width: "376px",
+                    maxWidth: "none",
+                    height: "40px",
+                    borderRadius: "8px",
+                }}
+                customInputClass={{ maxWidth: "none", width: "300px" }}
              />
-            <ul>
-                <li>S. No.</li>
-                <li>Name</li>
-                <li>Price</li>
-                <li>Category</li>
-                <li>Operation</li>
-
-            </ul>
+            <Table
+                columns={[
+                    { id: "S.NO.", label: "S.NO." },
+                    { id: "Name", label: "Product Name" },
+                    { id: "Price", label: "Price" },
+                    { id: "Category", label: "Category" },
+                    { id: "Action", label: "Action" },
+                ]}
+                // data={collectionAgencyData}
+                columnStyles={{
+                    color: "#1C1C1C",
+                    fontFamily: "Montserrat-Regular",
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: 500,
+                    lineHeight: "normal",
+                }}
+            />
+          
             {
                 products.length>0 ? products.map((item, index) =>
                     <ul key={item._id}>

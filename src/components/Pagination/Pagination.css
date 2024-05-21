@@ -1,0 +1,109 @@
+
+.pagination-container {
+    margin: 15px;
+    padding: 5px;
+    display: flex;
+    font-family: app-font-regular;
+    list-style-type: none;
+    justify-content: space-between;
+    align-items: center;
+
+    .pagination-actions {
+        display: flex;
+        align-items: center;
+
+        .pagination-item {
+            padding: 0 12px;
+            height: 32px;
+            text-align: center;
+            margin: auto 4px;
+            color: rgba(0, 0, 0, 0.87);
+            display: flex;
+            box-sizing: border-box;
+            align-items: center;
+            letter-spacing: 0.01071em;
+            border: 1px solid #DFE3E8;
+            border-radius: 4px;
+            line-height: 1.43;
+            font-size: 12px;
+            min-width: 32px;
+            justify-content: center;
+
+            &.dots:hover {
+                background-color: "#475BD8";
+                border: none;
+                cursor: default;
+            }
+
+            &:hover {
+                color: white;
+                background-color: #6477F0;
+                border: none;
+                cursor: pointer;
+            }
+
+            &.selected {
+                color: white;
+                border: none;
+                background-color: #475BD8;
+                ;
+            }
+
+            .arrows {
+                position: relative;
+                content: '';
+                display: inline-block;
+                width: 1em;
+                height: 1em;
+
+                &.arrowdisabled {
+                    pointer-events: none;
+                    cursor: default;
+                    opacity: 0.4;
+                }
+            }
+
+            &:first-child:disabled {
+                opacity: 0.4;
+                pointer-events: none;
+                cursor: default;
+            }
+        }
+    }
+
+    .pagination-select {
+        display: flex;
+        align-items: center;
+
+        .showhead {
+            margin-left: 3px;
+        }
+
+        .entrieshead {
+            margin-left: 7px;
+        }
+
+        span {
+            margin-right: 5px;
+        }
+
+        select {
+            width: 65px;
+            height: 32px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            border: 2px solid #ccc;
+        }
+
+        option {
+            height: 50px;
+            width: 140px;
+            background-color: rgb(241, 240, 240);
+        }
+
+        option:hover {
+            background-color: #475BD8;
+        }
+    }
+}

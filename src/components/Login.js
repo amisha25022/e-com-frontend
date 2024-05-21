@@ -52,7 +52,7 @@ const Auth = () => {
         });
         result = await result.json();
         if (result.auth) {
-            localStorage.setItem('user', JSON.stringify(result?.result));
+            isLogin ? localStorage.setItem('user', JSON.stringify(result?.user)) : localStorage.setItem('user', JSON.stringify(result?.result));
             localStorage.setItem('token', JSON.stringify(result.auth));
             navigate("/");
         } else {

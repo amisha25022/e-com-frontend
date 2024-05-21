@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Space, Input } from 'antd';
+import { Card, Space } from 'antd';
 import InputBox from "../../components/InputBox/InputBox";
 import Button from "../../components/Button/Button";
 
@@ -16,7 +16,6 @@ const CardComponent = ({ name, setName, email, setEmail, password, setPassword, 
     const handlePassword = (event) => {
         setPassword(event.value)
     };
-    console.log(errors, "#3333");
     const customButtonStyle = {
         height: '48px',
         padding: '10px 24px',
@@ -62,7 +61,6 @@ const CardComponent = ({ name, setName, email, setEmail, password, setPassword, 
                                 />
                             </>
                         )}
-            
                         <InputBox
                             id="email"
                             label="Email"
