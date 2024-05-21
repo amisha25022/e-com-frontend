@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, Space, Input, Button } from 'antd';
+import { Card, Space, Input } from 'antd';
 import InputBox from "../../components/InputBox/InputBox";
+import Button from "../../components/Button/Button";
 
 import './CardComponent.css';
 
@@ -15,6 +16,18 @@ const CardComponent = ({ name, setName, email, setEmail, password, setPassword, 
     const handlePassword = (event) => {
         setPassword(event.value)
     };
+    console.log(errors, "#3333");
+    const customButtonStyle = {
+        height: '48px',
+        padding: '10px 24px',
+        width: '40%',
+        gap: '16px',
+        color: '#FFF',
+        fontFamily: 'Montserrat-Regular',
+        fontSize: '16px',
+        borderRadius: '25px',
+        background: 'linear-gradient(180deg, #134CDE 0%, #163FB7 100%)',
+    };
     return (
         <div className="card-container">
             <div className="card-image">
@@ -22,14 +35,14 @@ const CardComponent = ({ name, setName, email, setEmail, password, setPassword, 
             </div>
             <div className="card-form">
                 <Space direction="vertical" style={{ width: '100%' }}>
-                    <img
+                    {/* <img
                         alt='logo'
                         className='logo'
                         src='https://icons4web.com/wp-content/uploads/2019/11/Shopping-cart-icon-for-website-8211-Shopping-cart-stock-image-299562.jpg'
                         style={{ height: "5%", width: "20%", margin: "-10% 0% 2% 40%" }}
-                    />
+                    /> */}
                     <Card style={{ width: '100%' }}>
-                        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                        <div style={{ textAlign: 'left', marginBottom: '20px', fontFamily: "Montserrat- Regular", fontSize: "15px" }}>
                             <h2>{"Login to your Account"}</h2>
                         </div>
                         {!isLogin && (
@@ -38,44 +51,52 @@ const CardComponent = ({ name, setName, email, setEmail, password, setPassword, 
                                     id= "name"
                                     placeholder="Name"
                                     onClick={handleName}
+                                    error={errors?.name ? true : false}
+                                    helperText={errors ? errors?.name : ""}
                                     customClass={{
                                         width: "33.4375rem",
-                                        height: "56px",
+                                        height: "40px",
                                         maxWidth: "none",
                                         marginBottom: "25px"
                                     }}
                                 />
-                                {errors.name && <span className="error">{errors.name}</span>}
                             </>
                         )}
+            
                         <InputBox
                             id="email"
                             label="Email"
                             onClick={handleEmail}
+                            error={errors?.email ? true : false}
+                            helperText={errors? errors?.email:""}
                             customClass={{
                                 width: "33.4375rem",
-                                height: "56px",
+                                height: "40px",
                                 maxWidth: "none",
                                 marginBottom: "25px"
                             }}
                         />
-                        {errors.email && <span className="error">{errors.email}</span>}
                         <InputBox
                             id="password"
                             label="Password"
                             onClick={handlePassword}
+                            error={errors?.password ? true : false}
+                            helperText={errors ?  errors?.password: ""}
                             customClass={{
                                 width: "33.4375rem",
-                                height: "56px",
+                                height: "40px",
                                 maxWidth: "none",
                                 marginBottom: "25px"
                             }}
                         />
-                        {errors.password && <span className="error">{errors.password}</span>}
-                        <Button onClick={handleAction} type="primary" block>
-                            {isLogin ? "Login" : "Signup"}
+                        <Button
+                            label={isLogin ? "Login" : "Signup"}
+                            buttonType="primary"
+                            onClick={handleAction}
+                            customStyle={customButtonStyle}>
+                           
                         </Button>
-                        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                        <div style={{ textAlign: 'left', marginTop: '20px', fontFamily: "Montserrat-Regular", fontSize:"20px" }}>
                             {isLogin ? (
                                 <p>Don't have an account? <a onClick={switchAuthMode}>Sign Up</a></p>
                             ) : (

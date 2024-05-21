@@ -1,0 +1,131 @@
+
+.btn {
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: app-font-regular;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8125rem 3.5625rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+
+    &-primary {
+        @extend .btn;
+        background-color: primary-button-color !important;
+        color: primary-button-text-color;
+
+        &:hover {
+            background: primary-button-hover;
+        }
+
+        &:disabled {
+            background: app-disable-button;
+        }
+
+        &.invert {
+            color: brand-color-primary;
+            border: 1px solid brand-color-primary;
+            background-color: app-bg-white;
+        }
+    }
+
+    &-secondary {
+        @extend .btn;
+        border: 1px solid secondary-button-border;
+        color: secondary-button-text-color;
+
+        &:hover {
+            border: 1px solid secondary-button-border-hover;
+            color: secondary-button-text-color-hover;
+        }
+
+        &:disabled {
+            border: 1px solid app-disable-button;
+            background: app-bg-white;
+            color: app-disable-button;
+        }
+
+        &.invert {
+            color: brand-color-secondary;
+            border: 1px solid brand-color-secondary;
+            background-color: app-bg-white;
+        }
+
+        &-download-button {
+            @extend .btn-secondary;
+            padding: 0.625rem 1.5rem;
+        }
+    }
+
+    &-link-button {
+        @extend .btn;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        color: link-button-color;
+        text-decoration-line: none;
+
+        &:hover {
+            text-decoration-line: underline;
+        }
+
+        &.invert {
+            color: brand-color-secondary;
+            border: 1px solid brand-color-secondary;
+            background-color: app-bg-white;
+        }
+    }
+}
+
+
+.icon-contained-button {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    background: icon-contained-background-color;
+    padding: 10px;
+    gap: 10px;
+    cursor: pointer;
+    border: none;
+    color: icon-contained-color;
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+        background: icon-contained-background-hover-color;
+    }
+
+    &.disabled {
+        background: app-disable-button;
+        ;
+    }
+}
+
+.input-loader {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
