@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Table from './Table/Table';
 import InputBox from './InputBox/InputBox';
+import { useNavigate} from 'react-router-dom';
+import Button from './Button/Button';
 import TrashIcon from "../assets/images/trash.svg";
 import EditIcon from "../assets/images/editIcon.svg"
 const ProductList = () => {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getProducts();
@@ -87,21 +90,41 @@ const ProductList = () => {
             <div style={headingStyle}>
                 <h3>Product List</h3>
             </div>
-            <InputBox 
-                id="search-product"
-                placeholder='Search Product'
-                onClick={searchHandle}
-                isSearch={true}
-                customClass={{
-                    width: "376px",
-                    maxWidth: "none",
-                    height: "40px",
-                    borderRadius: "8px",
-                    marginLeft: "2%"
-                    
-                }}
-                customInputClass={{ maxWidth: "none", width: "300px" }}
-             />
+            <div className="product-list-heading">
+                <InputBox
+                    id="search-product"
+                    placeholder='Search Product'
+                    onClick={searchHandle}
+                    isSearch={true}
+                    customClass={{
+                        width: "376px",
+                        maxWidth: "none",
+                        height: "40px",
+                        borderRadius: "8px",
+                        marginLeft: "2%"
+
+                    }}
+                    customInputClass={{ maxWidth: "none", width: "300px" }}
+                />
+                <Button
+                    buttonType="secondary"
+                    customStyle={{
+                        width: "136px",
+                        height: "42px",
+                        backgroundColor: "#475BD8",
+                        fontFamily: "Montserrat-Regular",
+                        fontSize: "15px",
+                        fontStyle: "normal",
+                        fontWeight: 700,
+                        lineHeight: "normal",
+                        borderRadius: "21px",
+                        color: "#FFF",
+                        whiteSpace: "nowrap",
+                    }}
+                    onClick={() => navigate('/add')}
+                    label={"Add Product"}
+                />
+            </div>
             <Table
                 columns={[
                     { id: "S.NO.", label: "S.NO." },
