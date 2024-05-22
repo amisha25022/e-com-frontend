@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from './Table/Table';
 import InputBox from './InputBox/InputBox';
+import Header from './HeaderComponent/Header';
 import { useNavigate} from 'react-router-dom';
 import Button from './Button/Button';
 import TrashIcon from "../assets/images/trash.svg";
@@ -8,6 +9,8 @@ import EditIcon from "../assets/images/editIcon.svg"
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user"));
+    const username = user ? user.name : "Amisha";
 
     useEffect(() => {
         getProducts();
@@ -51,6 +54,7 @@ const ProductList = () => {
         "Product Name": item?.name,
         "Price": item?.price,
         "Category": item?.category,
+        "Company": item?.company,
         "Action": (
             <div>
                 <img
@@ -71,7 +75,7 @@ const ProductList = () => {
 
     const customTableClass = {
         display: "grid",
-        gridTemplateColumns: "20% 20% 20% 20% 20%   ",
+        gridTemplateColumns: "16% 16% 16% 16% 16% 20%   ",
         height: 'max-content'
     };
     const customCellCss = {
@@ -80,7 +84,7 @@ const ProductList = () => {
     const headingStyle = {
         borderRadius: "8px",
         textAlign: "center",
-        margin: "20px 0",
+        margin: "0",
         fontSize: "24px",
         fontWeight: "bold"
     };
@@ -131,6 +135,7 @@ const ProductList = () => {
                     { id: "Product Name", label: "Product Name" },
                     { id: "Price", label: "Price" },
                     { id: "Category", label: "Category" },
+                    { id: "Company", label: "Company" },
                     { id: "Action", label: "Action" },
                 ]}
                 data={productsData}

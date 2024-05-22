@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'
+import InputBox from "./InputBox/InputBox"
+import Button from "./Button/Button"
 
 const UpdateProduct = () => {
     const [name, setName] = React.useState('');
@@ -37,28 +39,89 @@ const UpdateProduct = () => {
         }
 
     }
+    const handleProductName = (event) => {
+        setName(event.value)
+    };
+    const handleProductPrice = (event) => {
+        setPrice(event.value)
+    };
+    const handleProductCategory = (event) => {
+        setCategory(event.value)
+    };
+    const handleProductCompany = (event) => {
+        setCompnay(event.value)
+    };
+    const customInputBoxStyle = {
+        width: "33.4375rem",
+        height: "40px",
+        maxWidth: "none",
+        marginBottom: "40px"
+    };
+
+    const updateProductStyle = {
+        textAlign: "left",
+        marginTop: "4%",
+        fontSize: "25px",
+        fontFamily: "Montserrat-Bold",
+        fontWeight: "700",
+        marginBottom: "2%"
+    };
+    const customButtonStyle = {
+        height: '48px',
+        padding: '10px 24px',
+        width: '40%',
+        gap: '16px',
+        color: '#FFF',
+        fontFamily: 'Montserrat-Regular',
+        fontSize: '16px',
+        borderRadius: '25px',
+        background: 'linear-gradient(180deg, #134CDE 0%, #163FB7 100%)',
+    };
 
     return (
         <div className='product'>
-            <h1>Update Product</h1>
-            <input type="text" placeholder='Enter product name' className='inputBox'
-                value={name} onChange={(e) => { setName(e.target.value) }}
+            <div style={updateProductStyle}>
+                Update Product
+            </div>
+            <InputBox
+                id="product-name"
+                label='Product Name'
+                placeholder='Enter product name'
+                onClick={handleProductName}
+                initialValue= {name} 
+                customClass={customInputBoxStyle}
             />
-
-            <input type="text" placeholder='Enter product price' className='inputBox'
-                value={price} onChange={(e) => { setPrice(e.target.value) }}
+            <InputBox
+                id="product-price"
+                label='Product Price'
+                placeholder='Enter product price'
+                onClick={handleProductPrice}
+                initialValue={price} 
+                customClass={customInputBoxStyle}
             />
-
-            <input type="text" placeholder='Enter product category' className='inputBox'
-                value={category} onChange={(e) => { setCategory(e.target.value) }}
+            <InputBox
+                id="product-category"
+                label='Product Category'
+                placeholder='Enter product category'
+                onClick={handleProductCategory}
+                initialValue={category} 
+                customClass={customInputBoxStyle}
             />
-
-            <input type="text" placeholder='Enter product company' className='inputBox'
-                value={company} onChange={(e) => { setCompnay(e.target.value) }}
+            <InputBox
+                id="product-company"
+                label='Product Company'
+                placeholder='Enter product company'
+                onClick={handleProductCompany}
+                initialValue={company} 
+                customClass={customInputBoxStyle}
             />
+            <Button
+                label={"Update Product"}
+                buttonType="primary"
+                onClick={updateProduct}
+                customStyle={customButtonStyle}>
 
-
-            <button onClick={updateProduct} className='appButton'>Update Product</button>
+            </Button>
         </div>
     )
 }

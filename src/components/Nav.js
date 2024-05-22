@@ -1,30 +1,30 @@
 import React from 'react';
-import {
-    Link, useNavigate
-} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Header from './HeaderComponent/Header';
+
 const Nav = () => {
     const auth = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem("user"));
+    const username = user ? user.name : "Amisha";
     const navigate = useNavigate();
+
     const logout = () => {
         localStorage.clear();
-        navigate('/auth')
-    }
+        navigate('/auth');
+    };
     return (
-        <div>  
-            {
-                auth ?
-                    <ul className="nav-ul">
-                        <li><Link to="/">Products</Link></li>
-                        <li><Link to="/update"> Update Products</Link></li>
-                        <li><Link to="/profile">Profile</Link></li>
-                        <li> <Link onClick={logout} to="/auth">Logout ({JSON.parse(auth).name})</Link></li>
-                    </ul>
-                    :<div style={{marginBottom:"3rem"}}></div>
+        <div>
+            {auth ?
+                <ul className="nav-ul">
+                    <Header
+                        username={username}
+                        logout={logout}
+                    />
+                </ul>
+                : <div style={{ marginBottom: "3rem" }}></div>
             }
-
-
         </div>
-    )
-}
+    );
+};
 
 export default Nav;

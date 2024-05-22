@@ -1,8 +1,8 @@
 
 .nav-ul {
-  padding: 5px;
+  padding: 1px;
   margin: 0px;
-  background-color: skyblue;
+  /* background-color: skyblue; */
 }
 .nav-ul li{
   display:  inline-block;

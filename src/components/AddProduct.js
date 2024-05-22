@@ -58,10 +58,20 @@ const AddProduct = () => {
         borderRadius: '25px',
         background: 'linear-gradient(180deg, #134CDE 0%, #163FB7 100%)',
     };
+    const addProductStyle={
+        textAlign: "left", 
+        marginTop: "4%", 
+        fontSize: "25px", 
+        fontFamily: "Montserrat-Bold", 
+        fontWeight: "700", 
+        marginBottom: "2%"
+    }
 
     return (
         <div className='product'>
-            <h1>Add Product</h1>
+            <div style={addProductStyle}> 
+                Add Product
+            </div>
             <InputBox
                 id="product-name"
                 label='Product Name'
