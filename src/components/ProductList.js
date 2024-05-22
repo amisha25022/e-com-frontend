@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Table from './Table/Table';
 import InputBox from './InputBox/InputBox';
+import TrashIcon from "../assets/images/trash.svg";
+import EditIcon from "../assets/images/editIcon.svg"
 const ProductList = () => {
     const [products, setProducts] = useState([]);
 
@@ -29,8 +30,8 @@ const ProductList = () => {
         }
     }
 
-    const searchHandle = async (event)=>{
-        let key = event.value;
+    const searchHandle = async (e)=>{
+        let key = e.value;
         if(key){
             let result = await fetch(`http://localhost:5000/search/${key}`);
             result = await result.json()
@@ -42,10 +43,50 @@ const ProductList = () => {
         }
         
     }
+    const productsData = products.map((item, index) => ({
+        "S.NO.": index + 1,
+        "Product Name": item?.name,
+        "Price": item?.price,
+        "Category": item?.category,
+        "Action": (
+            <div>
+                <img
+                    src={EditIcon}
+                    alt="Edit"
+                    onClick={() => window.location.href = `/update/${item._id}`}
+                    style={{ cursor: "pointer", marginRight: "30px" }}
+                />
+                <img
+                    src={TrashIcon}
+                    alt="Delete"
+                    onClick={() => deleteProduct(item._id)}
+                    style={{ cursor: "pointer" }}
+                />
+            </div>
+        )
+    }))
+
+    const customTableClass = {
+        display: "grid",
+        gridTemplateColumns: "20% 20% 20% 20% 20%   ",
+        height: 'max-content'
+    };
+    const customCellCss = {
+        width: "fit-content"
+    }
+    const headingStyle = {
+        borderRadius: "8px",
+        textAlign: "center",
+        margin: "20px 0",
+        fontSize: "24px",
+        fontWeight: "bold"
+    };
 
     return (
         <div className="product-list">
-            <h3>Product List</h3>
+            <div style={headingStyle}>
+                <h3>Product List</h3>
+            </div>
             <InputBox 
                 id="search-product"
                 placeholder='Search Product'
@@ -56,44 +97,25 @@ const ProductList = () => {
                     maxWidth: "none",
                     height: "40px",
                     borderRadius: "8px",
+                    marginLeft: "2%"
+                    
                 }}
                 customInputClass={{ maxWidth: "none", width: "300px" }}
              />
             <Table
                 columns={[
                     { id: "S.NO.", label: "S.NO." },
-                    { id: "Name", label: "Product Name" },
+                    { id: "Product Name", label: "Product Name" },
                     { id: "Price", label: "Price" },
                     { id: "Category", label: "Category" },
                     { id: "Action", label: "Action" },
                 ]}
-                // data={collectionAgencyData}
-                columnStyles={{
-                    color: "#1C1C1C",
-                    fontFamily: "Montserrat-Regular",
-                    fontSize: "14px",
-                    fontStyle: "normal",
-                    fontWeight: 500,
-                    lineHeight: "normal",
-                }}
+                data={productsData}
+                customCellCss={customCellCss}
+                columnStyles={
+                    customTableClass
+                }
             />
-          
-            {
-                products.length>0 ? products.map((item, index) =>
-                    <ul key={item._id}>
-                        <li>{index + 1}</li>
-                        <li>{item.name}</li>
-                        <li>{item.price}</li>
-                        <li>{item.category}</li>
-                        <li>
-                            <button onClick={() => deleteProduct(item._id)}>Delete</button>
-                            <Link to={"/update/"+item._id} >Update </Link>
-                            </li>
-
-                    </ul>
-                )
-                :<h1>No Result Found</h1>
-            }
         </div>
     )
 }

@@ -166,7 +166,7 @@
 /* Styles for the password toggle icon */
 .password-toggle {
     position: absolute;
-    top: 27%;
+    top: 45%;
     right: 10px;
     padding: 20px 0px;
     transform: translateY(-50%);
