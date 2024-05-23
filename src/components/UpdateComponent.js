@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'
 import InputBox from "./InputBox/InputBox"
 import Button from "./Button/Button"
+import AlertBox from "./AlertBox/AlertBox"
 
 const UpdateProduct = () => {
     const [name, setName] = React.useState('');
     const [price, setPrice] = React.useState('');
     const [category, setCategory] = React.useState('');
     const [company, setCompnay] = React.useState('');
+    const [alert, setAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [severity, setSeverity] = useState("");
     const params = useParams();
     const navigate = useNavigate();
 
@@ -16,29 +20,54 @@ const UpdateProduct = () => {
     }, [])
 
     const getProductDetails = async () => {
-        let result = await fetch(`http://localhost:5000/product/${params.id}`);
-        result = await result.json();
-        setName(result.name);
-        setPrice(result.price);
-        setCategory(result.category);
-        setCompnay(result.company)
-    }
+        try {
+            let result = await fetch(`http://localhost:5000/product/${params.id}`);
+            result = await result.json();
+            setName(result.name);
+            setPrice(result.price);
+            setCategory(result.category);
+            setCompnay(result.company);
+        } catch (error) {
+            setAlert(true);
+            setSeverity("error");
+            setAlertMessage("Failed to fetch product details.");
+            setTimeout(() => {
+                setAlert(false);
+            }, 4000);
+        }
+    };
 
     const updateProduct = async () => {
-        console.warn(name, price, category, company)
-        let result = await fetch(`http://localhost:5000/product/${params.id}`, {
-            method: 'Put',
-            body: JSON.stringify({ name, price, category, company }),
-            headers: {
-                'Content-Type': 'Application/json'
+        try {
+            let result = await fetch(`http://localhost:5000/product/${params.id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ name, price, category, company }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            result = await result.json();
+            if (result.error) {
+                throw new Error(result.error);
+            } else {
+                setAlert(true);
+                setSeverity("success");
+                setAlertMessage("Product updated successfully!");
+                setTimeout(() => {
+                    setAlert(false);
+                    navigate('/');
+                }, 4000);
             }
-        });
-        result = await result.json();
-        if (result) {
-            navigate('/')
+        } catch (error) {
+            setAlert(true);
+            setSeverity("error");
+            setAlertMessage(error.message);
+            setTimeout(() => {
+                setAlert(false);
+            }, 4000);
         }
+    };
 
-    }
     const handleProductName = (event) => {
         setName(event.value)
     };
@@ -50,6 +79,11 @@ const UpdateProduct = () => {
     };
     const handleProductCompany = (event) => {
         setCompnay(event.value)
+    };
+    const handleAlertClose = () => {
+        setAlert(false);
+        setSeverity("");
+        setAlertMessage("");
     };
     const customInputBoxStyle = {
         width: "33.4375rem",
@@ -79,50 +113,59 @@ const UpdateProduct = () => {
     };
 
     return (
-        <div className='product'>
-            <div style={updateProductStyle}>
-                Update Product
-            </div>
-            <InputBox
-                id="product-name"
-                label='Product Name'
-                placeholder='Enter product name'
-                onClick={handleProductName}
-                initialValue= {name} 
-                customClass={customInputBoxStyle}
+        <>
+        {alert ? (
+            <AlertBox
+                severity={severity}
+                message={alertMessage}
+                handleClose={handleAlertClose}
             />
-            <InputBox
-                id="product-price"
-                label='Product Price'
-                placeholder='Enter product price'
-                onClick={handleProductPrice}
-                initialValue={price} 
-                customClass={customInputBoxStyle}
-            />
-            <InputBox
-                id="product-category"
-                label='Product Category'
-                placeholder='Enter product category'
-                onClick={handleProductCategory}
-                initialValue={category} 
-                customClass={customInputBoxStyle}
-            />
-            <InputBox
-                id="product-company"
-                label='Product Company'
-                placeholder='Enter product company'
-                onClick={handleProductCompany}
-                initialValue={company} 
-                customClass={customInputBoxStyle}
-            />
-            <Button
-                label={"Update Product"}
-                buttonType="primary"
-                onClick={updateProduct}
-                customStyle={customButtonStyle}>
+            ) : null}
+            <div className='product'>
+                <div style={updateProductStyle}>
+                    Update Product
+                </div>
+                <InputBox
+                    id="product-name"
+                    label='Product Name'
+                    placeholder='Enter product name'
+                    onClick={handleProductName}
+                    initialValue={name}
+                    customClass={customInputBoxStyle}
+                />
+                <InputBox
+                    id="product-price"
+                    label='Product Price'
+                    placeholder='Enter product price'
+                    onClick={handleProductPrice}
+                    initialValue={price}
+                    customClass={customInputBoxStyle}
+                />
+                <InputBox
+                    id="product-category"
+                    label='Product Category'
+                    placeholder='Enter product category'
+                    onClick={handleProductCategory}
+                    initialValue={category}
+                    customClass={customInputBoxStyle}
+                />
+                <InputBox
+                    id="product-company"
+                    label='Product Company'
+                    placeholder='Enter product company'
+                    onClick={handleProductCompany}
+                    initialValue={company}
+                    customClass={customInputBoxStyle}
+                />
+                <Button
+                    label={"Update Product"}
+                    buttonType="primary"
+                    onClick={updateProduct}
+                    customStyle={customButtonStyle}>
 
-            </Button>
-        </div>
+                </Button>
+            </div>
+        </>
     )
 }
 
