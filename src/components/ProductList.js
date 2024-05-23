@@ -136,7 +136,7 @@ const ProductList = () => {
             )}
             <div className="product-list">
                 <div style={headingStyle}>
-                    <h3>Product List</h3>
+                    Product List
                 </div>
                 <div className="product-list-heading">
                     <InputBox
